@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <Properties>
+        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+        <!-- 定义日志存储的路径，不要配置相对路径 -->
+        <property name="FILE_PATH" value="/data/apps/log/novice-executor/" />
+        <property name="FILE_NAME" value="DIAGNOSIS" />
+    </Properties>
+
+    <appenders>
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>{"logLevel":"%p","message":"%m" ,"appName":"Diagnosis","outputAddress":"%C[%M](%L)","requestId":"%X{requestId}","addInfos":%X{addInfos},"logTime":"%d{yyyy-MM-dd HH:mm:ss:SSS}"}%n</Pattern>
+            </PatternLayout>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        </console>
+
+        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info.log" filePattern="${FILE_PATH}/$${date:yyyy-MM}/$${date:MM-dd}/${FILE_NAME}-INFO-%d{MM-dd-HH}_%i.log.gz">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>{"logLevel":"%p","message":"%m" ,"appName":"DIAGNOSIS","outputAddress":"%C[%M](%L)","requestId":"%X{requestId}","addInfos":%X{addInfos},"logTime":"%d{yyyy-MM-dd HH:mm:ss:SSS}"}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，时间单位：文件名称中最小时间单位-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+        <RollingFile name="RollingFileUserInfo" fileName="${FILE_PATH}/userinfo.log" filePattern="${FILE_PATH}/$${date:yyyy-MM}/$${date:MM-dd}/${FILE_NAME}-USER-INFO-%d{MM-dd-HH}_%i.log.gz">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>{"logLevel":"%p","message":"%m" ,"appName":"DIAGNOSIS","outputAddress":"%C[%M](%L)","requestId":"%X{requestId}","addInfos":%X{addInfos},"logTime":"%d{yyyy-MM-dd HH:mm:ss:SSS}"}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，时间单位：文件名称中最小时间单位-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+        <!-- 这个会打印出所有的warn及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileWarn" fileName="${FILE_PATH}/warn.log" filePattern="${FILE_PATH}/$${date:yyyy-MM}/$${date:MM-dd}/${FILE_NAME}-WARN-%d{MM-dd-HH}_%i.log.gz">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>{"logLevel":"%p","message":"%m" ,"appName":"DIAGNOSIS","outputAddress":"%C[%M](%L)","requestId":"%X{requestId}","addInfos":%X{addInfos},"logTime":"%d{yyyy-MM-dd HH:mm:ss:SSS}"}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，时间单位：文件名称中最小时间单位-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+        <!-- 这个会打印出所有的error及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileError" fileName="${FILE_PATH}/error.log" filePattern="${FILE_PATH}/$${date:yyyy-MM}/$${date:MM-dd}/${FILE_NAME}-ERROR-%d{MM-dd-HH}_%i.log.gz">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>{"logLevel":"%p","message":"%m" ,"appName":"DIAGNOSIS","outputAddress":"%C[%M](%L)","requestId":"%X{requestId}","addInfos":%X{addInfos},"logTime":"%d{yyyy-MM-dd HH:mm:ss:SSS}"}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!--interval属性用来指定多久滚动一次，默认是1 hour-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </root>
+        <logger name="com.xes.novice.executor.xxljob.remote.impl.UserCenterQueryServiceImpl" level="info">
+            <appender-ref ref="RollingFileUserInfo"/>
+        </logger>
+    </loggers>
+
+</configuration>
