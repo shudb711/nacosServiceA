@@ -5,10 +5,9 @@ spring:
     nacos:
       config:
         server-addr: localhost:8848
-        file-extension: yaml
+        file-extension: properties
         namespace: c2db8522-1794-4689-bbc5-1ef61ab13251
         group: shudebao
-#        prefix: serviceA
       discovery:
         server-addr: localhost:8848
         namespace: c2db8522-1794-4689-bbc5-1ef61ab13251
