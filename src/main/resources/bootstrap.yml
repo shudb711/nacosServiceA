@@ -1,0 +1,13 @@
+spring:
+    application:
+        name: serviceA
+    cloud:
+        nacos:
+            config:
+                file-extension: yaml
+                group: shudebao
+                namespace: c2db8522-1794-4689-bbc5-1ef61ab13251
+                server-addr: localhost:8848
+            discovery:
+                namespace: c2db8522-1794-4689-bbc5-1ef61ab13251
+                server-addr: localhost:8848
